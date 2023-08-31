@@ -1,16 +1,12 @@
-# Copyright 2023 NPhucBinh @ GitHub
-# See LICENSE for details.
 import xlwings as xw
 import datetime as dt
 import pandas as pd
-import datetime as dt
-from dateutil import parser
 from datetime import date
 import requests
 import time
-from io import BytesIO
 import RStockvn as rpv
-
+from selenium.webdriver.common.by import By
+from selenium import webdriver
 
 
 def main():
@@ -25,36 +21,9 @@ def main():
 def hello(name):
     return f"Hello {name}!"
 
-@xw.func(async_mode='threading')
-def report_finance_cp68(symbol,reporty,timely):
-    data=rpv.report_finance_cp68(symbol,reporty,timely)
-    return data
 
 
-
-
-
-@xw.func(async_mode='threading')
-def report_finance_cf(symbol,report,year,typer):
-    data= rpv.report_finance_cf(symbol,report,year,typer)
-    return data
-
-@xw.func(async_mode='threading')
-def event_price_cp68(symbol):
-    data=rpv.event_price_cp68(symbol)
-    return data
-
-@xw.func(async_mode='threading')
-def info_company(symbol):
-    data=rpv.info_company(symbol)
-    return data
-
-@xw.func(async_mode='threading')
-def giaodich_noibo(symbol):
-    data=rpv.trade_internal(symbol)
-    return data
-
-@xw.func(async_mode='threading')
+@xw.func()
 def exchange_currency(current,cover_current,from_date,to_date):
     current=str(current)
     cover_current=str(cover_current)
@@ -63,54 +32,54 @@ def exchange_currency(current,cover_current,from_date,to_date):
     data=rpv.exchange_currency(current,cover_current,str(from_date.strftime('%Y-%m-%d')),str(to_date.strftime('%Y-%m-%d')))
     return data
 
-@xw.func(async_mode='threading')
+@xw.func()
 def baocaonhanh(mcp,loai,time):
     data=rpv.baocaonhanh(mcp,loai,time)
     return data
 
-@xw.func(async_mode='threading')
+@xw.func()
 def laisuat_vietstock(fromdate,todate):
     fromdate=str(fromdate)
     todate=str(todate)
     data=rpv.laisuat_vietstock(fromdate,todate)
     return data
 
-@xw.func(async_mode='threading')
+@xw.func()
 def getCPI_vietstock(fromdate,todate):
     fromdate=str(fromdate)
     todate=str(todate)
     data=rpv.getCPI_vietstock(fromdate,todate)
     return data
 
-@xw.func(async_mode='threading')
+@xw.func()
 def solieu_sanxuat_congnghiep(fromdate,todate):
     fromdate=str(fromdate)
     todate=str(todate)
     data=rpv.solieu_sanxuat_congnghiep(fromdate,todate)
     return data
 
-@xw.func(async_mode='threading')
+@xw.func()
 def solieu_banle_vietstock(fromdate,todate):
     fromdate=str(fromdate)
     todate=str(todate)
     data=rpv.solieu_banle_vietstock(fromdate,todate)
     return data
 
-@xw.func(async_mode='threading')
+@xw.func()
 def solieu_XNK_vietstock(fromdate,todate):
     fromdate=str(fromdate)
     todate=str(todate)
     data=rpv.solieu_XNK_vietstock(fromdate,todate)
     return data
 
-@xw.func(async_mode='threading')
+@xw.func()
 def solieu_FDI_vietstock(fromdate,todate):
     fromdate=str(fromdate)
     todate=str(todate)
     data=rpv.solieu_FDI_vietstock(fromdate,todate)
     return data   
 
-@xw.func(async_mode='threading')
+@xw.func()
 def tygia_vietstock(fromdate,todate):
     fromdate=str(fromdate)
     todate=str(todate)
@@ -118,21 +87,21 @@ def tygia_vietstock(fromdate,todate):
     return data 
 
 
-@xw.func(async_mode='threading')
+@xw.func()
 def solieu_tindung_vietstock(fromdate,todate):
     fromdate=str(fromdate)
     todate=str(todate)
     data=rpv.solieu_tindung_vietstock(fromdate,todate)
     return data 
 
-@xw.func(async_mode='threading')
+@xw.func()
 def solieu_danso_vietstock(fromdate,todate):
     fromdate=str(fromdate)
     todate=str(todate)
     data=rpv.solieu_danso_vietstock(fromdate,todate)
     return data 
 
-@xw.func(async_mode='threading')
+@xw.func()
 def solieu_GDP_vietstock(fromyear,fromQ,toyear,toQ):
     fromyear=int(fromyear)
     fromQ=int(fromQ)
@@ -140,6 +109,18 @@ def solieu_GDP_vietstock(fromyear,fromQ,toyear,toQ):
     toQ=int(toQ)
     data=rpv.solieu_GDP_vietstock(fromyear,fromQ,toyear,toQ)
     return data 
+
+
+@xw.func()
+def get_data_history_cafef(symbol,fromdate,todate):
+    fromdate = pd.to_datetime(fromdate)
+    fdate = fromdate.strftime('%d/%m/%Y')
+    todate = pd.to_datetime(todate)
+    tdate = todate.strftime('%d/%m/%Y')
+    data=rpv.get_data_history_cafef(symbol.upper(),fdate,tdate)
+    return data
+
+
 if __name__ == "__main__":
     xw.Book("func.xlsm").set_mock_caller()
     main()
