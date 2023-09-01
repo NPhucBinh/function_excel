@@ -23,7 +23,7 @@ def hello(name):
 
 
 
-@xw.func()
+@xw.func(async_mode='threading')
 def exchange_currency(current,cover_current,from_date,to_date):
     current=str(current)
     cover_current=str(cover_current)
@@ -33,49 +33,49 @@ def exchange_currency(current,cover_current,from_date,to_date):
     return data
 
 
-@xw.func()
+@xw.func(async_mode='threading')
 def laisuat_vietstock(fromdate,todate):
     fromdate=str(fromdate)
     todate=str(todate)
     data=rpv.laisuat_vietstock(fromdate,todate)
     return data
 
-@xw.func()
+@xw.func(async_mode='threading')
 def getCPI_vietstock(fromdate,todate):
     fromdate=str(fromdate)
     todate=str(todate)
     data=rpv.getCPI_vietstock(fromdate,todate)
     return data
 
-@xw.func()
+@xw.func(async_mode='threading')
 def solieu_sanxuat_congnghiep(fromdate,todate):
     fromdate=str(fromdate)
     todate=str(todate)
     data=rpv.solieu_sanxuat_congnghiep(fromdate,todate)
     return data
 
-@xw.func()
+@xw.func(async_mode='threading')
 def solieu_banle_vietstock(fromdate,todate):
     fromdate=str(fromdate)
     todate=str(todate)
     data=rpv.solieu_banle_vietstock(fromdate,todate)
     return data
 
-@xw.func()
+@xw.func(async_mode='threading')
 def solieu_XNK_vietstock(fromdate,todate):
     fromdate=str(fromdate)
     todate=str(todate)
     data=rpv.solieu_XNK_vietstock(fromdate,todate)
     return data
 
-@xw.func()
+@xw.func(async_mode='threading')
 def solieu_FDI_vietstock(fromdate,todate):
     fromdate=str(fromdate)
     todate=str(todate)
     data=rpv.solieu_FDI_vietstock(fromdate,todate)
     return data   
 
-@xw.func()
+@xw.func(async_mode='threading')
 def tygia_vietstock(fromdate,todate):
     fromdate=str(fromdate)
     todate=str(todate)
@@ -83,21 +83,21 @@ def tygia_vietstock(fromdate,todate):
     return data 
 
 
-@xw.func()
+@xw.func(async_mode='threading')
 def solieu_tindung_vietstock(fromdate,todate):
     fromdate=str(fromdate)
     todate=str(todate)
     data=rpv.solieu_tindung_vietstock(fromdate,todate)
     return data 
 
-@xw.func()
+@xw.func(async_mode='threading')
 def solieu_danso_vietstock(fromdate,todate):
     fromdate=str(fromdate)
     todate=str(todate)
     data=rpv.solieu_danso_vietstock(fromdate,todate)
     return data 
 
-@xw.func()
+@xw.func(async_mode='threading')
 def solieu_GDP_vietstock(fromyear,fromQ,toyear,toQ):
     fromyear=int(fromyear)
     fromQ=int(fromQ)
@@ -107,7 +107,7 @@ def solieu_GDP_vietstock(fromyear,fromQ,toyear,toQ):
     return data 
 
 
-@xw.func()
+@xw.func(async_mode='threading')
 def get_data_history_cafef(symbol,fromdate,todate):
     fromdate = pd.to_datetime(fromdate)
     fdate = fromdate.strftime('%d/%m/%Y')
