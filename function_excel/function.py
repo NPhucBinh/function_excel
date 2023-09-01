@@ -24,6 +24,12 @@ def hello(name):
 
 
 @xw.func(async_mode='threading')
+def report_finance_cf(symbol,report,year,timely):
+    data=rpv.report_finance_cf(symbol,report,year,timely)
+    return data
+
+
+@xw.func(async_mode='threading')
 def exchange_currency(current,cover_current,from_date,to_date):
     current=str(current)
     cover_current=str(cover_current)
