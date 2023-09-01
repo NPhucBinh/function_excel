@@ -32,10 +32,6 @@ def exchange_currency(current,cover_current,from_date,to_date):
     data=rpv.exchange_currency(current,cover_current,str(from_date.strftime('%Y-%m-%d')),str(to_date.strftime('%Y-%m-%d')))
     return data
 
-@xw.func()
-def baocaonhanh(mcp,loai,time):
-    data=rpv.baocaonhanh(mcp,loai,time)
-    return data
 
 @xw.func()
 def laisuat_vietstock(fromdate,todate):
