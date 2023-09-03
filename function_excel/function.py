@@ -7,6 +7,10 @@ import time
 import RStockvn as rpv
 from selenium.webdriver.common.by import By
 from selenium import webdriver
+import os 
+from webdriver_manager.chrome import ChromeDriverManager
+
+os.system('pip install --upgrade selenium webdriver_manager')
 
 
 def main():
@@ -25,7 +29,7 @@ def hello(name):
 
 @xw.func()
 def report_finance_cf(symbol,report,year,timely):
-    symbol, report, year, timely = str(symbol), str(report), str(year), str(timely)
+    symbol, report, year, timely = str(symbol), str(report), int(year), str(timely)
     data=rpv.report_finance_cf(symbol,report,year,timely)
     return data
 
