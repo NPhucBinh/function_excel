@@ -28,6 +28,7 @@ def hello(name):
 
 
 @xw.func()
+@xw.ret(expand='table')
 def report_finance_cf(symbol,report,year,timely):
     symbol, report, year, timely = str(symbol), str(report), int(year), str(timely)
     data=rpv.report_finance_cf(symbol,report,year,timely)
@@ -35,6 +36,7 @@ def report_finance_cf(symbol,report,year,timely):
 
 
 @xw.func()
+@xw.ret(expand='table')
 def exchange_currency(current,cover_current,from_date,to_date):
     current=str(current)
     cover_current=str(cover_current)
@@ -45,6 +47,7 @@ def exchange_currency(current,cover_current,from_date,to_date):
 
 
 @xw.func()
+@xw.ret(expand='table')
 def laisuat_vietstock(fromdate,todate):
     fromdate=str(fromdate)
     todate=str(todate)
@@ -52,6 +55,7 @@ def laisuat_vietstock(fromdate,todate):
     return data
 
 @xw.func()
+@xw.ret(expand='table')
 def getCPI_vietstock(fromdate,todate):
     fromdate=str(fromdate)
     todate=str(todate)
@@ -59,6 +63,7 @@ def getCPI_vietstock(fromdate,todate):
     return data
 
 @xw.func()
+@xw.ret(expand='table')
 def solieu_sanxuat_congnghiep(fromdate,todate):
     fromdate=str(fromdate)
     todate=str(todate)
@@ -66,6 +71,7 @@ def solieu_sanxuat_congnghiep(fromdate,todate):
     return data
 
 @xw.func()
+@xw.ret(expand='table')
 def solieu_banle_vietstock(fromdate,todate):
     fromdate=str(fromdate)
     todate=str(todate)
@@ -73,6 +79,7 @@ def solieu_banle_vietstock(fromdate,todate):
     return data
 
 @xw.func()
+@xw.ret(expand='table')
 def solieu_XNK_vietstock(fromdate,todate):
     fromdate=str(fromdate)
     todate=str(todate)
@@ -80,6 +87,7 @@ def solieu_XNK_vietstock(fromdate,todate):
     return data
 
 @xw.func()
+@xw.ret(expand='table')
 def solieu_FDI_vietstock(fromdate,todate):
     fromdate=str(fromdate)
     todate=str(todate)
@@ -87,6 +95,7 @@ def solieu_FDI_vietstock(fromdate,todate):
     return data   
 
 @xw.func()
+@xw.ret(expand='table')
 def tygia_vietstock(fromdate,todate):
     fromdate=str(fromdate)
     todate=str(todate)
@@ -95,6 +104,7 @@ def tygia_vietstock(fromdate,todate):
 
 
 @xw.func()
+@xw.ret(expand='table')
 def solieu_tindung_vietstock(fromdate,todate):
     fromdate=str(fromdate)
     todate=str(todate)
@@ -102,6 +112,7 @@ def solieu_tindung_vietstock(fromdate,todate):
     return data 
 
 @xw.func()
+@xw.ret(expand='table')
 def solieu_danso_vietstock(fromdate,todate):
     fromdate=str(fromdate)
     todate=str(todate)
@@ -109,6 +120,7 @@ def solieu_danso_vietstock(fromdate,todate):
     return data 
 
 @xw.func()
+@xw.ret(expand='table')
 def solieu_GDP_vietstock(fromyear,fromQ,toyear,toQ):
     fromyear=int(fromyear)
     fromQ=int(fromQ)
@@ -119,6 +131,7 @@ def solieu_GDP_vietstock(fromyear,fromQ,toyear,toQ):
 
 
 @xw.func()
+@xw.ret(expand='table')
 def get_data_history_cafef(symbol,fromdate,todate):
     fromdate = pd.to_datetime(fromdate)
     fdate = fromdate.strftime('%d/%m/%Y')
