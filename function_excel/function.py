@@ -25,6 +25,7 @@ def hello(name):
 
 @xw.func()
 def report_finance_cf(symbol,report,year,timely):
+    symbol, report, year, timely = str(symbol), str(report), str(year), str(timely)
     data=rpv.report_finance_cf(symbol,report,year,timely)
     return data
 
