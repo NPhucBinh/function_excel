@@ -23,4 +23,6 @@ Lưu lại đóng tab
 Chọn thẻ xlwings đổi đường path PYTHONPATH thành địa chỉ thư mục lưu file, tiếp click "Import Funtions"
 
 
-Đối với trường hợp dữ liệu không trả về dữ liệu dạng bảng thêm dòng sau @xw.ret(expand='table') sau mỗi @xw.func()
+Đối với trường hợp dữ liệu không trả về dữ liệu dạng bảng thêm dòng sau @xw.ret(expand='table') sau mỗi @xw.func()\
+
+### Liên hệ hỗ trợ nếu cần [Facebook](https://www.facebook.com/phuc.binh.3839/)
