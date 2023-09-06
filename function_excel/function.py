@@ -7,10 +7,6 @@ import time
 import RStockvn as rpv
 from selenium.webdriver.common.by import By
 from selenium import webdriver
-import os 
-from webdriver_manager.chrome import ChromeDriverManager
-
-os.system('pip install --upgrade selenium webdriver_manager')
 
 
 def main():
@@ -25,18 +21,47 @@ def main():
 def hello(name):
     return f"Hello {name}!"
 
+@xw.func()
+def kich_hoat_id(id):
+    rpv.key_id(id)
+    return 'Đã kích hoạt'
 
 
 @xw.func()
-@xw.ret(expand='table')
+def giao_dich_tu_doanh(symbol,fromdate,todate):
+    fromdate = pd.to_datetime(fromdate)
+    fdate = fromdate.strftime('%d/%m/%Y')
+    todate = pd.to_datetime(todate)
+    tdate = todate.strftime('%d/%m/%Y')
+    df,data=rpv.get_proprietary_history_cafef(symbol.upper(),fdate,tdate)
+    return data
+
+
+@xw.func()
+def list_company():
+    df=rpv.list_company()
+    return df
+
+@xw.func()
+def update_company():
+    data=rpv.update_company()
+    return data
+
+@xw.func()
+def report_finance_vnd(symbol,types,year_f,timely):
+    symbol,types, timely=symbol.upper(), types.upper(), timely.upper()
+    year_f=int(year_f)
+    data=rpv.report_finance_vnd(symbol,types,year_f,timely)
+    return data
+
+@xw.func()
 def report_finance_cf(symbol,report,year,timely):
     symbol, report, year, timely = str(symbol), str(report), int(year), str(timely)
     data=rpv.report_finance_cf(symbol,report,year,timely)
     return data
 
 
-@xw.func()
-@xw.ret(expand='table')
+@xw.func(async_mode='threading')
 def exchange_currency(current,cover_current,from_date,to_date):
     current=str(current)
     cover_current=str(cover_current)
@@ -47,7 +72,6 @@ def exchange_currency(current,cover_current,from_date,to_date):
 
 
 @xw.func()
-@xw.ret(expand='table')
 def laisuat_vietstock(fromdate,todate):
     fromdate=str(fromdate)
     todate=str(todate)
@@ -55,7 +79,6 @@ def laisuat_vietstock(fromdate,todate):
     return data
 
 @xw.func()
-@xw.ret(expand='table')
 def getCPI_vietstock(fromdate,todate):
     fromdate=str(fromdate)
     todate=str(todate)
@@ -63,7 +86,6 @@ def getCPI_vietstock(fromdate,todate):
     return data
 
 @xw.func()
-@xw.ret(expand='table')
 def solieu_sanxuat_congnghiep(fromdate,todate):
     fromdate=str(fromdate)
     todate=str(todate)
@@ -71,7 +93,6 @@ def solieu_sanxuat_congnghiep(fromdate,todate):
     return data
 
 @xw.func()
-@xw.ret(expand='table')
 def solieu_banle_vietstock(fromdate,todate):
     fromdate=str(fromdate)
     todate=str(todate)
@@ -79,7 +100,6 @@ def solieu_banle_vietstock(fromdate,todate):
     return data
 
 @xw.func()
-@xw.ret(expand='table')
 def solieu_XNK_vietstock(fromdate,todate):
     fromdate=str(fromdate)
     todate=str(todate)
@@ -87,7 +107,6 @@ def solieu_XNK_vietstock(fromdate,todate):
     return data
 
 @xw.func()
-@xw.ret(expand='table')
 def solieu_FDI_vietstock(fromdate,todate):
     fromdate=str(fromdate)
     todate=str(todate)
@@ -95,7 +114,6 @@ def solieu_FDI_vietstock(fromdate,todate):
     return data   
 
 @xw.func()
-@xw.ret(expand='table')
 def tygia_vietstock(fromdate,todate):
     fromdate=str(fromdate)
     todate=str(todate)
@@ -104,7 +122,6 @@ def tygia_vietstock(fromdate,todate):
 
 
 @xw.func()
-@xw.ret(expand='table')
 def solieu_tindung_vietstock(fromdate,todate):
     fromdate=str(fromdate)
     todate=str(todate)
@@ -112,7 +129,6 @@ def solieu_tindung_vietstock(fromdate,todate):
     return data 
 
 @xw.func()
-@xw.ret(expand='table')
 def solieu_danso_vietstock(fromdate,todate):
     fromdate=str(fromdate)
     todate=str(todate)
@@ -120,7 +136,6 @@ def solieu_danso_vietstock(fromdate,todate):
     return data 
 
 @xw.func()
-@xw.ret(expand='table')
 def solieu_GDP_vietstock(fromyear,fromQ,toyear,toQ):
     fromyear=int(fromyear)
     fromQ=int(fromQ)
@@ -130,14 +145,13 @@ def solieu_GDP_vietstock(fromyear,fromQ,toyear,toQ):
     return data 
 
 
-@xw.func()
-@xw.ret(expand='table')
-def get_data_history_cafef(symbol,fromdate,todate):
+@xw.func(async_mode='threading')
+def get_price_history_cafef(symbol,fromdate,todate):
     fromdate = pd.to_datetime(fromdate)
     fdate = fromdate.strftime('%d/%m/%Y')
     todate = pd.to_datetime(todate)
     tdate = todate.strftime('%d/%m/%Y')
-    data=rpv.get_data_history_cafef(symbol.upper(),fdate,tdate)
+    data=rpv.get_price_history_cafef(symbol.upper(),fdate,tdate)
     return data
 
 
