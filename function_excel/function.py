@@ -7,7 +7,8 @@ import time
 import RStockvn as rpv
 from selenium.webdriver.common.by import By
 from selenium import webdriver
-
+import gdown
+from datetime import datetime, timedelta
 
 def main():
     wb = xw.Book.caller()
@@ -22,12 +23,10 @@ def hello(name):
     return f"Hello {name}!"
 
 @xw.func()
-def kich_hoat_id(id):
-    rpv.key_id(id)
-    return 'Đã kích hoạt'
+def key_id(code):
+    day=rpv.key_id(str(code))
+    return f'Đã kích hoạt {day} ngày'
 
-
-@xw.func()
 def giao_dich_tu_doanh(symbol,fromdate,todate):
     fromdate = pd.to_datetime(fromdate)
     fdate = fromdate.strftime('%d/%m/%Y')
@@ -46,6 +45,33 @@ def list_company():
 def update_company():
     data=rpv.update_company()
     return data
+
+
+@xw.func()
+def lai_suat_cafef():
+    data=rpv.lai_suat_cafef()
+    return data
+
+
+
+@xw.func()
+def giao_dich_noi_bo(symbol,fromdate,todate):
+    fromdate = pd.to_datetime(fromdate)
+    fdate = fromdate.strftime('%d/%m/%Y')
+    todate = pd.to_datetime(todate)
+    tdate = todate.strftime('%d/%m/%Y')
+    data=rpv.get_insider_transaction_history_cafef(symbol.upper(),fdate,tdate)
+    return data
+
+@xw.func()
+def giao_dich_khoi_ngoai(symbol,fromdate,todate):
+    fromdate = pd.to_datetime(fromdate)
+    fdate = fromdate.strftime('%d/%m/%Y')
+    todate = pd.to_datetime(todate)
+    tdate = todate.strftime('%d/%m/%Y')
+    data=rpv.get_foreign_transaction_history_cafef(symbol.upper(),fdate,tdate)
+    return data
+
 
 @xw.func()
 def report_finance_vnd(symbol,types,year_f,timely):
