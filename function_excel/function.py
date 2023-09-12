@@ -25,7 +25,7 @@ def hello(name):
 @xw.func()
 def key_id(code):
     day=rpv.key_id(str(code))
-    return f'Đã kích hoạt {day} ngày'
+    return day
 
 def giao_dich_tu_doanh(symbol,fromdate,todate):
     fromdate = pd.to_datetime(fromdate)
