@@ -18,6 +18,16 @@ def main():
     else:
         sheet["A1"].value = "Hello xlwings!"
 
+
+@xw.func
+def get_price_historical_vnd(symbol,fromdate,todate):
+    fromdate, todate = pd.to_datetime(fromdate, dayfirst=True), pd.to_datetime(todate, dayfirst=True)
+    fdate, tdate=fromdate.strftime('%Y-%m-%d'), todate.strftime('%Y-%m-%d')
+    df=rpv.get_price_historical_vnd(symbol,fdate,tdate)
+    return df
+
+
+
 @xw.func
 def hello(name):
     return f"Hello {name}!"
@@ -171,7 +181,7 @@ def solieu_GDP_vietstock(fromyear,fromQ,toyear,toQ):
     return data 
 
 
-@xw.func(async_mode='threading')
+@xw.func()
 def get_price_history_cafef(symbol,fromdate,todate):
     fromdate = pd.to_datetime(fromdate)
     fdate = fromdate.strftime('%d/%m/%Y')
