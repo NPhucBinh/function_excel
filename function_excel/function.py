@@ -8,7 +8,8 @@ import RStockvn as rpv
 from selenium.webdriver.common.by import By
 from selenium import webdriver
 import gdown
-from datetime import datetime, timedelta
+from datetime import datetime
+from datetime import timedelta
 
 def main():
     wb = xw.Book.caller()
@@ -23,14 +24,28 @@ def main():
 def get_price_historical_vnd(symbol,fromdate,todate):
     fromdate, todate = pd.to_datetime(fromdate, dayfirst=True), pd.to_datetime(todate, dayfirst=True)
     fdate, tdate=fromdate.strftime('%Y-%m-%d'), todate.strftime('%Y-%m-%d')
-    df=rpv.get_price_historical_vnd(symbol,fdate,tdate)
-    return df
+    url=f'https://finfo-api.vndirect.com.vn/v4/stock_prices?sort=date&q=code:{symbol.upper()}~date:gte:{fdate}~date:lte:{tdate}&size=100000&page=1' 
+    head={"User-Agent":random_user()}
+    payload={}
+    r=requests.get(url,headers=head,data=payload)
+    df=pd.DataFrame(r.json()['data'])
+    data=df[['code','date','open','high','low','close','nmVolume','nmValue','ptVolume', 'ptValue']]
+    data = data.copy()
+    data.rename(columns={'nmVolume':'KLGD Khớp lệnh','nmValue':'GTGD Khớp lệnh','ptVolume':'KLGD Thỏa thuận','ptValue':'GTGD Thỏa thuận'}, inplace=True)
+    return data
 
 
 
-@xw.func
-def hello(name):
-    return f"Hello {name}!"
+
+@xw.func()
+def trung_binh_ck(symbol,todate):
+    tdate=pd.to_datetime(todate, dayfirst=True)
+    fromdate=tdate - timedelta(days=6)
+    fromdate,tdate=fromdate.strftime('%Y-%m-%d'),tdate.strftime('%Y-%m-%d')
+    return fromdate
+
+
+
 
 @xw.func()
 def key_id(code):
