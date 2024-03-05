@@ -4,6 +4,7 @@ import pandas as pd
 from datetime import date
 import requests
 import time
+from user_agent import random_user
 import RStockvn as rpv
 from selenium.webdriver.common.by import By
 from selenium import webdriver
@@ -25,7 +26,7 @@ def get_price_historical_vnd(symbol,fromdate,todate):
     fromdate, todate = pd.to_datetime(fromdate, dayfirst=True), pd.to_datetime(todate, dayfirst=True)
     fdate, tdate=fromdate.strftime('%Y-%m-%d'), todate.strftime('%Y-%m-%d')
     url=f'https://finfo-api.vndirect.com.vn/v4/stock_prices?sort=date&q=code:{symbol.upper()}~date:gte:{fdate}~date:lte:{tdate}&size=100000&page=1' 
-    head={"User-Agent":random_user()}
+    head={"User-Agent":random_user()}#'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; ko; rv:1.9.1b2) Gecko/20081201'}
     payload={}
     r=requests.get(url,headers=head,data=payload)
     df=pd.DataFrame(r.json()['data'])
