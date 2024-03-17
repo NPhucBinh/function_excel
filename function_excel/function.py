@@ -11,7 +11,7 @@ from selenium import webdriver
 import gdown
 from datetime import datetime
 from datetime import timedelta
-
+from bs4 import BeautifulSoup
 def main():
     wb = xw.Book.caller()
     sheet = wb.sheets[0]
@@ -21,12 +21,81 @@ def main():
         sheet["A1"].value = "Hello xlwings!"
 
 
-@xw.func
+
+
+@xw.func()
+def momentum_ck(symbol):
+    data=rpv.momentum_ck(symbol)
+    return data
+
+
+@xw.func()
+def CW_info(symbol):
+    head1={"User-Agent":'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0'}
+    pload1={}
+    url2=f'https://finance.vietstock.vn/chung-khoan-phai-sinh/{symbol}/cw-tong-quan.htm'
+    r=requests.get(url2,headers=head1,data=pload1)
+    soup=BeautifulSoup(r.text,'html.parser')
+    ds=soup.find(class_="table table-hover")
+    df=pd.read_html(ds.prettify())[0]
+    df.rename(columns={0:'CW',1:f'{symbol[1:].upper()}'},inplace=True)
+    return df
+
+
+
+@xw.func()
+def Date_auto(time):
+    today = dt.datetime.now()
+    today_date = dt.datetime(today.year, today.month, today.day)
+    return today_date
+
+
+
+
+@xw.func()
+def thoi_gian_CW(time):
+    today = dt.datetime.now()
+    # Chuyển chuỗi thành đối tượng datetime
+    fd = pd.to_datetime(time, dayfirst=True)
+    # Chuyển today và fd về cùng một dạng (00:00:00)
+    today_date = dt.datetime(today.year, today.month, today.day)
+    fd_date = dt.datetime(fd.year, fd.month, fd.day)
+    diff_days = fd_date - today_date
+    return diff_days.days
+
+
+
+def tinh_ngay(number):
+    todate = dt.datetime.now()
+    date=(number/4*1.9)
+    fromdate = todate - timedelta(days=(number+date-1))
+    fdate = fromdate.strftime('%Y-%m-%d')
+    tdate = todate.strftime('%Y-%m-%d')
+    return fdate, tdate
+
+
+
+def TB_bien_dong_ck(symbol,number):
+    fdate, edate= tinh_ngay(number)
+    df=get_price_historical_vnd(symbol,fdate,edate)
+    df['per_change'] = ((df['close'] - df['close'].shift(-1)) / df['close'].shift(-1)).astype(float)
+    return df
+
+@xw.func()
+def tinh_phan_tram(symbol,number):
+    df=TB_bien_dong_ck(symbol,number)
+    df=df['per_change']
+    return df.mean()
+
+
+
+
+@xw.func()
 def get_price_historical_vnd(symbol,fromdate,todate):
     fromdate, todate = pd.to_datetime(fromdate, dayfirst=True), pd.to_datetime(todate, dayfirst=True)
     fdate, tdate=fromdate.strftime('%Y-%m-%d'), todate.strftime('%Y-%m-%d')
     url=f'https://finfo-api.vndirect.com.vn/v4/stock_prices?sort=date&q=code:{symbol.upper()}~date:gte:{fdate}~date:lte:{tdate}&size=100000&page=1' 
-    head={"User-Agent":random_user()}#'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; ko; rv:1.9.1b2) Gecko/20081201'}
+    head={"User-Agent":random_user()}
     payload={}
     r=requests.get(url,headers=head,data=payload)
     df=pd.DataFrame(r.json()['data'])
@@ -39,10 +108,10 @@ def get_price_historical_vnd(symbol,fromdate,todate):
 
 
 @xw.func()
-def trung_binh_ck(symbol,todate):
+def chuyen_ngay(todate):
     tdate=pd.to_datetime(todate, dayfirst=True)
     fromdate=tdate - timedelta(days=6)
-    fromdate,tdate=fromdate.strftime('%Y-%m-%d'),tdate.strftime('%Y-%m-%d')
+    fromdate=fromdate.strftime('%d/%m/%Y')
     return fromdate
 
 
@@ -53,6 +122,7 @@ def key_id(code):
     day=rpv.key_id(str(code))
     return day
 
+@xw.func()
 def giao_dich_tu_doanh(symbol,fromdate,todate):
     fromdate = pd.to_datetime(fromdate)
     fdate = fromdate.strftime('%d/%m/%Y')
@@ -112,15 +182,6 @@ def report_finance_cf(symbol,report,year,timely):
     data=rpv.report_finance_cf(symbol,report,year,timely)
     return data
 
-
-@xw.func(async_mode='threading')
-def exchange_currency(current,cover_current,from_date,to_date):
-    current=str(current)
-    cover_current=str(cover_current)
-    from_date = pd.to_datetime(from_date,infer_datetime_format=True)
-    to_date = pd.to_datetime(to_date,infer_datetime_format=True)
-    data=rpv.exchange_currency(current,cover_current,str(from_date.strftime('%Y-%m-%d')),str(to_date.strftime('%Y-%m-%d')))
-    return data
 
 
 @xw.func()
