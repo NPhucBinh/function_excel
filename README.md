@@ -1,4 +1,6 @@
-# function_excel
+#Thông báo: Hiện đang cập nhật
+
+## function_excel
 Các hàm function cho excel
 
 Các bước thực hiện/chuẩn bị:
